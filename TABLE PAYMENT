@@ -1,0 +1,28 @@
+
+
+select
+	*
+	from payment p
+where
+	amount >7
+	and payment_date between '2007-03-01' and '2007-03-31'; 
+	
+select
+	*
+	from payment p
+where
+	amount > 7
+	or amount between 3.3 and 5.5;
+	
+
+select *from payment p 
+where amount <7 and amount not between 3.3 and 5.5;
+
+select *from payment p 
+where payment_id%10=1;
+
+select *from actor a 
+where last_name like 'R%';
+
+select *from film 
+where length in (87,116,184);
