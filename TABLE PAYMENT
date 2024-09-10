@@ -1,4 +1,4 @@
-
+#Получить все платежи(payment) с суммой(amount) более 7 доллaров в перииод(payment_date) с 2007-03-01.
 
 select
 	*
@@ -6,23 +6,34 @@ select
 where
 	amount >7
 	and payment_date between '2007-03-01' and '2007-03-31'; 
-	
-select
+#Получить все платежи(payment) с суммой(amount) более 7 доллaров или с суммой(amount) поподающий в диапазон от 3,3 доллора до 5,5 доллара.
 	*
 	from payment p
 where
 	amount > 7
 	or amount between 3.3 and 5.5;
 	
-
+#Получить все платежи(payment),исключив платежи с суммой(amount) более 7 доллaров и исключив платежи у которых  суммо(amount) поподающий в 
 select *from payment p 
-where amount <7 and amount not between 3.3 and 5.5;
+where not(amount <7)
+and not (amount not between 3.3 and 5.5);
 
+#Получить все платежи(payment) ,у которых последняя цифра идентификатора (payment_id) равна 1 (другими словами остаток от деление payment_id на 10 равна 1).
 select *from payment p 
 where payment_id%10=1;
 
+или 
+ select *
+from payment p 
+where mod(payment_id,10)=1;
+
+#Необходимо получить всех актеров(actor) , чье имя (first_name ) начинается с 'R'.
 select *from actor a 
 where last_name like 'R%';
 
+#Необходимо получить всех актеров(actor) , у которых в фамилии (last_name )  нет буквы 'a' .
+select *from actor a 
+where last_name not like '%a%';
+#Получить все фильмы(film) , у которых продолжительность(length принемает  одной из этих значений 87,116,184.
 select *from film 
 where length in (87,116,184);
