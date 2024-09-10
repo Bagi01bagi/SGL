@@ -1,0 +1,38 @@
+
+-- Из таблицы фильмов(film) запросить 2 поля:
+--title и length. Поля length дать имя -'len'
+--Отсортитровать полученный результат
+-- Сортировать по продолжительности (по полю length)
+--Написать запрос в 3 вариантах с сортировкой
+-- 1. по имени поля в таблице (length)
+--2. по номеру столбца в результирующем наборе
+--3. по имени стоблца в результирующем наборе
+
+select title,length len
+from film
+order by length;
+
+select title,length len
+from film
+order by 2;
+
+select title,length len
+from film
+order by len;
+
+--Из таблицы фильмов(film) запросить 3 поля: length,rental_duration ,titile. 
+--Отсортировать по убыванию следующего выражение : length/rental_duration
+
+select length ,rental_duration ,title, length/rental_duration 
+from film
+order by length/rental_duration desc;
+
+
+-- Из таблицы фильмов(film) запросить все поля с помощью * 
+--Отсортировать полученный набор сночало по рейтингу(rating) по возрастанию, 
+--а фильмы с одиноковым рейтингом по убыванию продолжительности(length).
+
+
+select*
+from film 
+order by rating,length desc;
