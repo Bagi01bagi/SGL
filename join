@@ -1,0 +1,98 @@
+--1.Нам известно название фильм (значение поля title таблицы film )- 'Chamber Italian'.
+--Задача: получить список всех актеров ,снявшихся в этом фильме.По каждому 
+--актеру(запись из таблиц actor)нужно вывести 2 поля: имя(first_name) и фамилия(last_name). Связь между таблицами 
+--фильмов и актеров производится постредствам промежуточной таблицы(film_actor).
+
+select
+	a.first_name ,
+	a.last_name
+from
+	film f
+inner join film_actor fa 
+using(film_id)
+inner join actor a 
+using(actor_id)
+where
+	f.title = 'Chamber Italian';
+
+
+--2.Получить список всех фильмов(film) из категорий(category)''Comedy' (значение поля 'name' ).
+-- По каждому найденному фильтру нужно вывыести название из поля 'title'. Связь между фильмами и категориями осуществляется с помощью
+--промежуточной таблицы film_category.
+
+
+select *
+from film f
+inner join category c 
+using c
+where c."name" ='Comedy';
+
+select *
+from category c 
+join film_category fc 
+on fc.category_id =c.category_id 
+join film f 
+on fc.film_id =f.film_id 
+where c."name" ='Comedy';
+
+--3.Вывести список пар: название фильма(film.title) - название категорий(category.name). Если один филь поподает в несколько категорий, вывыести
+--несколько строк для этого фильма. Связь между таблицами фильмов(film) и категорий (categoty)
+--осуществляется  постредсвом промежуточной таблицы film_category.
+
+select
+	f.title ,
+	c."name" 
+from film f
+join film_category fc 
+on
+	fc.film_id = f.film_id
+join category c 
+on
+	c.category_id = fc.category_id ;
+
+--4. Вывести ссписок пар: название фильма(film.title) и название категорий(category.name )(сделать декартова произведение фильмов и категорий)
+--Для каждой пары вывести True в 3ьей колонке , если данный фильм относиться к указанной ктегорий.Иначе вывести false. 
+--
+
+
+select f.title ,c."name" 
+from film f 
+cross join category c ;
+
+
+select f.title ,c."name" 
+from film f 
+inner join category c on True;
+
+select f.title ,
+c."name" ,
+fc.film_id is not null
+from film f 
+cross join category c 
+left join film_category fc 
+on fc.film_id =f.film_id 
+and fc.category_id =c.category_id 
+;
+--5.Вывести название всех фильмов (film.title),по которым в магазине нет  дисков и кассет
+--то есть по таким фильмам нет хзаписей в таблице inventory.
+
+select
+	f.title,
+	f.film_id,
+	i.film_id
+from
+	film f
+left join inventory i
+   on
+	i.film_id = f.film_id 
+;
+
+
+select
+	f.title
+	from
+	film f
+left join inventory i
+   on
+	i.film_id = f.film_id 
+where i.film_id is null;
