@@ -1,0 +1,96 @@
+1. Вывести список фильмов(film). По каждому фильму отобразить 3 поля : 1. название фильма(film.title) 
+2. рейтинг фильма (film.rating)
+3.разшифровку рейтинга фильма. Ниже указаны пары : рейтинг - разшифровка рейтинга:
+G-Нет возрастных ограничений 
+PG- Рекомендуется присутсвие родителей
+PG-13- Детям до 13 лет просмотр не желателен
+R- Лицам до 17 лет обязательно присутвие взрослого
+NC-17-Лицам до 18 лет просмотр запрещен
+
+
+
+select f.title ,
+f.rating,
+case
+	 when f.rating ='G' then 'Нет возрастных ограничений'
+	 when F.rating ='PG' then 'Рекомендуется присутсвие родителей'
+	 when f.rating ='PG-13' then 'Детям до 13 лет просмотр не желателен'
+	 when f.rating ='R' then 'Лицам до 17 лет обязательно присутвие взрослого'
+	 when f.rating ='NC-17' then 'Лицам до 18 лет просмотр запрещен'
+	 else 'Неизвесный рейтинг'
+end as shirfr
+from film f ;
+
+
+select f.title ,
+f.rating,
+case
+	f.rating 
+	 when 'G' then 'Нет возрастных ограничений'
+	 when 'PG' then 'Рекомендуется присутсвие родителей'
+	 when 'PG-13' then 'Детям до 13 лет просмотр не желателен'
+	 when 'R' then 'Лицам до 17 лет обязательно присутвие взрослого'
+	 when 'NC-17' then 'Лицам до 18 лет просмотр запрещен'
+	 else 'Неизвесный рейтинг'
+end as shirfr
+from film f ;
+
+2.Вывести 3 колонки : 1- название фильма(film.title) 2.Рейтинг фильма(film.rating) 3. Продолжительность фильма.
+Отобразить только фильмы продолжительностью более 120(film.leanth>120).Для фильмов  с рейтингом G
+при проверке брать удвоенную продолжительность(film.leangth*2>120) .При написании условия отбора фильмов изпользовать case.
+
+
+
+select f.title ,f.rating ,
+case
+	when f.rating='G' and f.length*2>120 then f.length
+	else f.length 
+ end length_film
+from film f 
+where f.length>120;
+
+
+select 
+f.title ,
+f.rating ,
+f.length 
+from film f 
+where 
+case when f.rating ='G' then  f.length*2  else f.length end>120; 
+
+
+
+select 
+f.title ,
+f.rating ,
+f.length 
+from film f 
+where f.length >case when f.rating ='G' then 60  else 120 end; 
+
+
+
+
+3.Вывести список всех фильмов(film) . По каждому фильму нужно отобразить 2 колонки:
+1.название фильма(film.title ) 2. название категории фильма(category.name).
+Если фильм относится к категорий с category_id =5 , то  вместо категории с идентификатором 5 нужно отобразить
+категории с category_id=1.
+Свзяь между таблицей фильмов(film) и таблицей категории(category) осуществляется посредсвом промежуточной таблицы film_categoty. 
+
+
+select
+	f.title,
+	c."name" as category_name,
+	fc.category_id,
+	c.category_id
+	from
+	film f
+join film_category fc 
+on
+	f.film_id = fc.film_id
+join category c
+on
+	c.category_id = case when fc.category_id =5 then 1 else fc.category_id end;
+
+
+select *
+from category c ;
