@@ -1,0 +1,64 @@
+1. Получить список названий всех фильмов(film.title) , рекомендованнх для просмотра самыми маленькими зрителями.
+Для этого нужно объединить результаты выполнения двух запросов:
+1.пОЛУЧИТЬ 	все фильмы(film) с рейтингом G(film.rating='G')
+2. получить все фильмы(film) , в  которых снимался актер с фамилиейGrant(actor.last_name='grant) поскольку этот актер  по умолчанию снимается только в фильмах
+для маленких вне зависомости от проставленного рейтинга.
+Если какой-то фильм попадет в оба запроса , то его нужно вывести дважды.
+--шить задачу с изпользованием union/union all/except/intersect.
+
+
+select f.title 
+from film f 
+where f.rating ='G'
+group by f.title
+
+
+union all
+
+select f.title
+from film f 
+join film_actor fa on fa.film_id =f.film_id 
+join actor a on a.actor_id =fa.actor_id and a.last_name ='Grant'
+group by f.title;
+
+
+
+
+2.Получить список названий всех фильмов(film.title) с рейтингомG(film.rating='G') в которых  снималься актер с фамилиейGrant(actor.last_name='grant) .
+Решить задачу с изпользованием union/union all/except/intersect.
+
+select 
+f.title
+from film f
+where f.rating ='G'
+group by f.title 
+
+union all
+
+select 
+f.title 
+from actor a 
+join film_actor fa ON fa.actor_id =a.actor_id  and a.last_name ='Grant'
+join film f  on fa.film_id =f.film_id ;
+
+
+
+3. Получить список названий всех фильмов(film.title) с рейтингомGrant(actor.last_name='grant),в которых снималься актер с  фамилиейGrant(actor.last_name='Grant) .Решить задачу с
+изользованием union/union all/except/intersect
+
+
+select 
+f.title
+from film f
+where f.rating ='G'
+group by f.title 
+
+except
+
+select 
+f.title 
+from actor a 
+join film_actor fa ON fa.actor_id =a.actor_id  and a.last_name ='Grant'
+join film f  on fa.film_id =f.film_id ;
+
+
