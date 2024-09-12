@@ -1,0 +1,25 @@
+Написать запрос , который возвращает 2 колонки :
+1. Имя и фамилия актера через запятую
+2. кол-во фильмов , в котором снялся актер
+Нужно вывести вторую пятерку актеров (пять актеров ,начиная с шестого)
+в порядке убывания кол-во фильмов, в которых они снимались
+
+
+select
+	a.first_name || ' ' || a.last_name as actor_name,
+	count(*) as count_film
+from
+	actor a
+join film_actor fa using(actor_id)
+group by
+	a.first_name || ' ' || a.last_name,
+	fa.actor_id
+order by
+	count_film desc ,
+	fa.actor_id
+limit 5
+offset 5;
+
+
+
+
