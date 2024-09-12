@@ -13,7 +13,7 @@ where f.rating ='G'
 group by f.title
 
 
-union all
+intersect
 
 select f.title
 from film f 
@@ -60,5 +60,8 @@ f.title
 from actor a 
 join film_actor fa ON fa.actor_id =a.actor_id  and a.last_name ='Grant'
 join film f  on fa.film_id =f.film_id ;
+
+
+
 
 
