@@ -1,0 +1,67 @@
+--Вывести названия всех языков(language.name) , на которых нет фильмов в базе данных.
+Изпользовать функциюnot exists
+
+select l."name" 
+from "language" l 
+where
+	not exists(
+	select
+	1
+	from
+      film f 
+where l.language_id=f.language_id 
+)
+;
+
+
+2. Вывести названия всех фильмов(film.title) , в которых актеры с фамилией начинающие
+на'Chase' .Изпользовать функцию  in
+
+select
+	f.title 
+	from film f
+where f.film_id in
+	(
+	select
+		1
+	from
+		film_actor fa 
+		join actor a 
+		on fa.actor_id=a.actor_id
+	where
+		a.last_name like 'Chase'
+);
+
+select*from actor a  ;
+
+3. Вывести все фильмы из таблицы . По каждому фильму отобразить :
+-название фильма(film.title)
+-- название языка , на котором этот язык снять (language.name)
+Названия языка получить с поиощью позапроса в select
+
+select f.title,
+(select
+l."name"
+from "language" l 
+where l.language_id=f.language_id
+)as language_name
+from film f ;
+
+
+
+4. Вывести список всех фильмов .По каждому фильму вывести :
+-название(film.title)
+-на сколько  дней фильм отдается в сдачу (film.rental_duration))
+-сколько всего фильмов  с таким же значением(rental_duration)
+С помощью подзапроса в блоке получить таблицу , в которой для каждого значения ю
+(rental_duration)будет подчитано кол-во фильмов
+
+select 
+f.title ,f.rental_duration , frd.cnt as film_rent_cnt
+from film f 
+join (select
+f2.rental_duration,
+count(*) as cnt
+from film f2 
+group by f2.rental_duration) frd 
+on f.rental_duration =frd.rental_duration
