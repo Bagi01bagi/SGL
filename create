@@ -1,0 +1,46 @@
+/* Создать таблицу  со списком фильмов(internet_film) , доступных для аренды онлайн. Список полей:
+- Идентификатор фильма -internet_film_id (целое число . Должно проставляться автоматически).
+Обязательное  для заполнения).
+-title Название фильма(строка длиной до 50 символов.Пробелами в конце дополяться не должна)
+Обязательное для заполнения).
+-price Стоимость сдачи в пракат (чило с плавающей точкой.Обезательно для заполнения)
+-rental_duration Кол-во дней на которое фильм отдается в пракат (целое число.Обязательно для заполнения).
+-description Описание фильма (строка фильма (строка длиной до 500 символов.Не обязательно для заполнения)*/
+drop table internet_film;
+
+create table internet_film(internet_film_id serial not null,
+title varchar(50) not null ,price numeric(10,2) not null,
+rental_duration smallint not null,description varchar(500) null);
+
+
+select *
+from internet_film;
+
+
+/*2. Добавить в таблицу 3 любых фильма по желанию
+ */
+
+insert into internet_film
+(title,price,rental_duration, description)
+values
+('Джентельмены',23.45,21,'фильм про наркоторговцов'),
+('Титаник',15.12,10,'фильм про катострофы'),
+('Мистер и Миссис Смит',14.45,12,'Боевик про агенов');
+
+select *
+from internet_film;
+
+ * 3. Добавить в таблицу все фильмы иза таблицу film у которых рейтинг 'G' (FILM.RATING='G'. Поставить цену проката 2
+ * Остольные поля взять из таблицы film
+ 
+ insert into internet_film
+(title,price,rental_duration, description)
+select f.title ,2,f.rental_duration ,f.description 
+from film f
+where f.rating ='G';
+
+
+select *
+from internet_film;
+ 
+ 
