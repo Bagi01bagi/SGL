@@ -1,0 +1,34 @@
+/*1. Задача: создать представление, в котором будет 2 поля:
+- film_id идентификатор фильма 
+-actor_cnt-кол-во актеров , снявшихся в фильме
+Если в фильме не снялось ни одного актера , тотакой фильм должен выводиться
+в этом представлений  с 0 актеров.*/
+drop view my_view;
+create view film_actor_cnt as 
+select f.film_id, count(fa.film_id) as actor_cnt
+from film f
+left join film_actor fa 
+on fa.film_id=f.film_id
+group by f.film_id;
+
+
+
+select *
+from film_actor_cnt;
+
+/*2. Написать запрос , в которм будет изпользовано представление из предыдущей задачи.
+Вывести список всех фильмов(film) и по каждому фильму отобразить :
+-название фильма(film.title)
+-кол-во актеров , снявшихсяв фильме
+*/
+
+
+select f.title,fa.actor_cnt
+from film f 
+inner join film_actor_cnt fa 
+on f.film_id=fa.film_id;
+
+
+3. Удалить представление,созданное в первой задаче/*
+
+drop view film_actor_cnt;
