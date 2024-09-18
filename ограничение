@@ -1,0 +1,14 @@
+/* Создать таблицу(internet_film) со списком фильмов ,доступных для аренды онлайн.Список полей:
+-internet_film_id)Идентификатор фильма (целое число .Должно проставляться автоматически,Первычный ключ).
+-title НАЗВАНИЕ ФИЛЬМА (строка длиной до 50 символов .Обязательно для заполнения .Уникальное).
+-price Стоймость сдачи в прокат (число с плавющей точкой . Обязательно для заполнения.Должно быть, больше 0 и меньше или равно 100).
+-rental_duration -Кол-во дней , накоторое фильм отдается в прокат (целое число .Обязательное для заполнения .Больше 0.)
+-description-Описание фильма (строка длиной до 500 символов.Не обязательное заполнения*/
+drop table internet_film ;
+
+create table internet_film(
+internet_film_id serial primary key,
+title varchar(50) not null unique,
+price numeric(8,2)  not null check (price>0 and price <=100),
+rental_duration int not null check  (rental_duration >0),
+description varchar (500));
