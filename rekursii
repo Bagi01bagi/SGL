@@ -1,0 +1,63 @@
+/* 
+ * 1.Для сотрудника с идентификаторм 2 посчитать ,сколько всего у него подчиненных.
+2. Для сотрудника с идентификатором 20 посчитать , сколько всего у него начальников
+3. С помощью рекурсивного запроса вывести сотрудника с идентификаторм 1 и всех его подчиненных
+со второго и третьего уровней иерархии. С 4-ого и неже подчиненных выводить не нужно*/
+
+with recursive subordinates as(
+select e.employee_id
+from employees e
+where e.employee_id=2
+union
+select e.employee_id
+from subordinates s
+join employees e
+on s.employee_id =e.manager_id)
+
+select count(*)-1  as subordinates_cnt
+from subordinates;
+
+2. Для сотрудника с идентификатором 20 посчитать , сколько всего у него начальников
+with recursive managers as(
+select
+	e.manager_id
+from
+	employees e
+where
+	e.employee_id = 20
+union
+select e.manager_id
+from
+	managers m
+join employees e
+on
+	e.employee_id = m.manager_id)
+
+select
+	count(manager_id) 
+from
+	managers;
+
+
+3. С помощью рекурсивного запроса вывести сотрудника с идентификаторм 1 и всех его подчиненных
+со второго и третьего уровней иерархии. С 4-ого и неже подчиненных выводить не нужно*/
+with recursive subordinates as(
+select e.employee_id,
+e.full_name,
+1 as level_hier
+from employees e
+where e.employee_id=1
+union
+select e.employee_id,
+e.full_name,
+level_hier+1 as level_hier
+from subordinates s
+join employees e
+on s.employee_id =e.manager_id
+where s.level_hier+1<4)
+
+select e.employee_id,
+e.full_name
+from subordinates e;
+
+
