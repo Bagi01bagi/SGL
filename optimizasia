@@ -1,0 +1,17 @@
+explain 
+select *
+from film f 
+where rental_duration =7;
+
+explain analyze
+select *
+from film f 
+where rental_duration =7;
+
+
+create index film_rental_duration_idx on film (rental_duration);
+
+explain analyze
+select *
+from film f 
+where rental_duration =7;
